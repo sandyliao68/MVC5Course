@@ -10,11 +10,21 @@ namespace MVC5Course.Controllers
     {
         public ActionResult Index()
         {
+            try
+            {
+
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }  
             return View();
         }
 
         public ActionResult About()
         {
+          
             ViewBag.Message = "Your application description page.";
 
             return View();
