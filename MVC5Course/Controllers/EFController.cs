@@ -64,14 +64,20 @@ namespace MVC5Course.Controllers
             //}
             #endregion 
 
+            #region 新增範例
             //取到新增的那一筆ID
             //var data = db.Product.Where(p => p.ProductId == pkey).ToList();
             //排序DESC大到小
-            var data = db.Product.OrderByDescending(p => p.ProductId);
+            //var data = db.Product.OrderByDescending(p => p.ProductId);
             //抓回所有資料清單
             //var data=db.Product.ToList();
-            
-
+            #endregion 
+            var data = db.Product.OrderByDescending(p => p.ProductId).Take(5);  //取前五筆資料
+            foreach (var item in data)
+            {
+                item.Price = item.Price + 1;
+            }
+            db.SaveChanges();
             return View(data);
         }
 
@@ -82,6 +88,15 @@ namespace MVC5Course.Controllers
             //var data = db.Product.Where(p => p.ProductId == id).FirstOrDefault();
             var data = db.Product.FirstOrDefault(p => p.ProductId == id);
             return View(data);
+        }
+
+        public ActionResult Delete(int id)
+        {
+            var item = db.Product.Find(id);
+            db.Product.Remove(item);
+            db.SaveChanges();
+
+            return View();
         }
     }
 }
