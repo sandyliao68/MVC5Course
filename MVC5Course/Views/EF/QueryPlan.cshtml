@@ -1,19 +1,16 @@
 ﻿@model IEnumerable<MVC5Course.Models.Product>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "QueryPlan";
 }
 
-<h2>Index</h2>
+<h2>QueryPlan</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ProductId)
-        </th>
         <th>
             @Html.DisplayNameFor(model => model.ProductName)
         </th>
@@ -26,14 +23,11 @@
         <th>
             @Html.DisplayNameFor(model => model.Stock)
         </th>
-        <th></th>
+        <th> 訂單明細筆數</th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProductId)
-        </td>
         <td>
             @Html.DisplayFor(modelItem => item.ProductName)
         </td>
@@ -47,9 +41,7 @@
             @Html.DisplayFor(modelItem => item.Stock)
         </td>
         <td>
-       
-            @Html.ActionLink("詳細資料", "Detail", new { id=item.ProductId }) |
-            @Html.ActionLink("刪除", "Delete", new { id = item.ProductId })
+            @item.OrderLine.Count() <!-導覽屬性--->
         </td>
     </tr>
 }
