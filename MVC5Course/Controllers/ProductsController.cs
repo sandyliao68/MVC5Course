@@ -19,9 +19,22 @@ namespace MVC5Course.Controllers
         // GET: Products
         public ActionResult Index()
         {
-            var data = repo.All();
+            var data = repo.All().Take(5);
 
             return View(data);
+        }
+
+        [HttpPost]
+        public ActionResult Index(IList<Product> data )
+        {
+            foreach (var item in data)
+            {
+                var product = repo.Find(item.ProductId);
+                product.Stock = item.Stock;
+                product.Price = item.Price;
+            }
+            repo.UnitOfWork.Commit();
+            return RedirectToAction("Index");
         }
 
         // GET: Products/Details/5
@@ -38,6 +51,9 @@ namespace MVC5Course.Controllers
             {
                 return HttpNotFound();
             }
+
+            
+
             return View(product);
         }
 
@@ -94,6 +110,7 @@ namespace MVC5Course.Controllers
                 var db = (FabricsEntities)repo.UnitOfWork.Context;
                 db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["ProductsEditDoneMsg"] = "商品編輯成功!";
                 return RedirectToAction("Index");
             }
             return View(product);
