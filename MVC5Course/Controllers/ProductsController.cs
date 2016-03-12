@@ -25,17 +25,25 @@ namespace MVC5Course.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(IList<Product> data )
+        public ActionResult Index(IList<Produsts批次更新ViewModel> data)
         {
-            foreach (var item in data)
+            if (ModelState.IsValid)
             {
-                var product = repo.Find(item.ProductId);
-                product.Stock = item.Stock;
-                product.Price = item.Price;
+                foreach (var item in data)
+                {
+                    var product = repo.Find(item.ProductId);
+                    product.Stock = item.Stock;
+                    product.Price = item.Price;
+                }
+                repo.UnitOfWork.Commit();
+                return RedirectToAction("Index");
             }
-            repo.UnitOfWork.Commit();
-            return RedirectToAction("Index");
+            return View(repo.All().Take(5));    //重新回到輸入錯誤的狀態
         }
+
+
+
+       
 
         // GET: Products/Details/5
         public ActionResult Details(int? id)

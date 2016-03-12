@@ -32,8 +32,16 @@
                 <th></th>
             </tr>
 
+        @*
+        data[0].ProductId
+        data[0].ProductName
+        data[1].ProductId
+        data[1].ProductName
+        *@
+
             @{
-                var data = Model.ToArray();
+               var data = Model.ToArray();
+               
             }
             @for (var i = 0; i < data.Length; i++)
             {
@@ -43,13 +51,15 @@
                         @Html.DisplayFor(modelItem => data[i].ProductName)
                     </td>
                     <td>
-                        @Html.EditorFor(modelItem => data[i].Price)
+                        @Html.EditorFor(modelItem => data[i].Price)<br />
+                        @Html.ValidationMessageFor(modelItem => data[i].Price)
                     </td>
                     @*<td>
         @Html.EditorFor(modelItem => data[i].Active)
     </td>*@
                     <td>
-                        @Html.EditorFor(modelItem => data[i].Stock)
+                        @Html.EditorFor(modelItem => data[i].Stock)<br />
+                        @Html.ValidationMessageFor(modelItem => data[i].Stock)
                     </td>
                     <td>
                         @Html.ActionLink("Edit", "Edit", new { id = data[i].ProductId }) |
