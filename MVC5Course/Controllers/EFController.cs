@@ -110,7 +110,7 @@ namespace MVC5Course.Controllers
            // var data = db.Product.OrderBy(p => p.ProductId).AsQueryable();
             //正確用法
             var data = db.Product.Include(t => t.OrderLine).OrderBy(p => p.ProductId).AsQueryable();
-            //直接下SQL語法
+            //直接下SQL語法,不要常用,用VIEW OR 預存程序
 //           var data = db.Database.SqlQuery<Product>(@"
 //                 SELECT * 
 //                 FROM dbo.Product p 
