@@ -20,6 +20,8 @@ namespace MVC5Course.Controllers
         // GET: Base
         public ActionResult Debug()
         {
+            //http://localhost:10681/Home/debug
+            //每一個都有Debug action 可以用(共用檔)
             return Content("DEBUG");
         }
     }
