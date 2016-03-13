@@ -41,6 +41,7 @@ namespace MVC5Course.Controllers
         [HandleError(ExceptionType = typeof(SqlException), View = "ErrorSql")]
         public ActionResult ErrorTest(string e)
         {
+            //F2 變數一起改
             //web.config 加入<customErrors mode="On"></customErrors>
             //home/errortest?e=1
             //home/errortest?e=2
@@ -60,5 +61,13 @@ namespace MVC5Course.Controllers
             }
             return Content("no error");
         }
+
+        public ActionResult RazorTest()
+        {
+             int[] data = new int[] { 1, 2, 3, 4, 5 };
+             return PartialView(data);
+        }
     }
+
+   
 }
