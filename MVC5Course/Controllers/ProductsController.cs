@@ -111,17 +111,35 @@ namespace MVC5Course.Controllers
         // 詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product)
+        // 使用 TryUpdateModel 做延遲驗證
+        //public ActionResult Edit([Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product)    //會BIND到預設值
+        public ActionResult Edit(int id, FormCollection form)   // FormCollection form-->沒用到只是為了不重複Edit
         {
-            if (ModelState.IsValid)
+            /*
+             * 改成介面有輸入驗證屬性
+             * 模型繫結延遲驗證  
+            * 透過介面限制傳入參數的數量(白名單機制)
+            * TryUpdateModel<IUserInputModel>(user);
+            * 範例：http://bit.ly/YvHnnx
+             */
+            Product product = repo.Find(id);    //從DB取得完整資料
+            if (TryUpdateModel<Product>(product, new string[] {
+                 "ProductId","ProductName","Price","Active","Stock" })) //BIND部份屬性(有提供修改的欄位)
             {
-                var db = (FabricsEntities)repo.UnitOfWork.Context;
-                db.Entry(product).State = EntityState.Modified;
-                db.SaveChanges();
-                TempData["ProductsEditDoneMsg"] = "商品編輯成功!";
-                return RedirectToAction("Index");
+                repo.UnitOfWork.Commit();
             }
-            return View(product);
+            TempData["ProductsEditDoneMsg"] = "商品編輯成功!";    //用完一次就清空
+            return RedirectToAction("Index");
+            //原本的程式碼
+            //if (ModelState.IsValid)
+            //{
+            //    var db = (FabricsEntities)repo.UnitOfWork.Context;
+            //    db.Entry(product).State = EntityState.Modified;
+            //    db.SaveChanges();
+            //    TempData["ProductsEditDoneMsg"] = "商品編輯成功!";
+            //    return RedirectToAction("Index");
+            //}
+            //return View(product);
         }
 
         // GET: Products/Delete/5
