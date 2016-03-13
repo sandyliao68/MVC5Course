@@ -6,26 +6,20 @@ using System.Web.Mvc;
 
 namespace MVC5Course.Controllers
 {
+    [紀錄Action的執行時間]
     public class HomeController : BaseController
     {
+         [共用的ViewBag資料共享於部分HomeController動作方法Attribute]
         public ActionResult Index()
-        {
-            try
-            {
-
-            }
-            catch (Exception)
-            {
-                
-                throw;
-            }  
+        {           
             return View();
         }
 
+       [共用的ViewBag資料共享於部分HomeController動作方法Attribute]
         public ActionResult About()
         {
-          
-            ViewBag.Message = "Your application description page.";
+
+            //ViewBag.Message = "Your application description page."; 改用共用的ViewBag資料共享於部分HomeController動作方法Attribute
 
             return View();
         }
@@ -41,5 +35,7 @@ namespace MVC5Course.Controllers
         {
             return View();
         }
+
+        
     }
 }

@@ -194,6 +194,8 @@
     <Compile Include="Controllers\MBController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="ActionFilter\共用的ViewBag資料共享於部分HomeController動作方法Attribute.cs" />
+    <Compile Include="ActionFilter\紀錄Action的執行時間.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
