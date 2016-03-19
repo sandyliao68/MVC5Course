@@ -1,4 +1,9 @@
 ﻿@model IEnumerable<MVC5Course.Models.Client>
+@using PagedList
+@using PagedList.Mvc
+@{
+    var data = Model as IPagedList;
+}
 
 @{
     ViewBag.Title = "Index";
@@ -19,6 +24,8 @@
     @Ajax.ActionLink("Create New", "Create", CommonAjaxOptions) 
 </p>
 <div><img id="loading" src="~/Content/ajax-loader.gif" style="display:none"  /></div>
+@Html.PagedListPager(data, p => Url.Action("Index", new { pageNo = p }))
+
 
 <table class="table">
     <tr>
@@ -73,4 +80,6 @@
 }
 
 </table>
+
+ @Html.PagedListPager(data, p => Url.Action("Index", new { pageNo = p }))
 <div id="Details"></div>
