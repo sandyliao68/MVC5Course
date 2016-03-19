@@ -17,11 +17,29 @@ namespace MVC5Course.Controllers
         ProductRepository repo = RepositoryHelper.GetProductRepository();
 
         // GET: Products
-        public ActionResult Index()
+        public ActionResult Index(int? ProductId,bool? isActive,string keyword)
         {
-            var data = repo.All().Take(5);
+            //var data = repo.All().Take(5);
+            var data = repo.All(true);
+            //下拉選單
+            if (isActive.HasValue)
+            {
+                data = data.Where(p => p.Active.HasValue && p.Active.Value == isActive.Value);
+           }
+            if (!string .IsNullOrEmpty (keyword))
+            {
+                data = data.Where(p => p.ProductName.Contains(keyword));
+            }
 
-            return View(data);
+            List<SelectListItem > items = new List<SelectListItem>() ;
+            items.Add(new SelectListItem() { Value = "true", Text = "有效" });
+            items.Add(new SelectListItem() { Value = "false", Text = "無效" });
+            ViewData["isActive"] = new SelectList(items, "Value", "Text");
+   
+
+
+            ViewBag.SelectedProductID = ProductId;
+            return View(data.Take(5));
         }
 
         [HttpPost]
@@ -40,6 +58,7 @@ namespace MVC5Course.Controllers
             }
             return View(repo.All().Take(5));    //重新回到輸入錯誤的狀態
         }
+
 
 
 

@@ -11,13 +11,18 @@
 *@
     <h2>Index</h2>
 
+@using (Html.BeginForm("Index","Products",FormMethod.Get))
+{
     <p>
-        @Html.ActionLink("Create New", "Create")
+        @Html.ActionLink("Create New", "Create")    
+        @Html.DropDownList("isActive", null, "--是否有效--", new { onchange = "this.form.submit();" })
+        @Html.TextBox("keyword",null,new {onchange = "this.form.submit();"})
         @if (!String.IsNullOrEmpty(Convert.ToString(TempData["ProductsEditDoneMsg"])))
         {
             <h3>@TempData["ProductsEditDoneMsg"]</h3>
         }
     </p>
+}
     @using (Html.BeginForm())
     {
         <table class="table">
@@ -69,7 +74,8 @@
                     <td>
                         @Html.ActionLink("Edit", "Edit", new { id = data[i].ProductId }) |
                         @Html.ActionLink("Details", "Details", new { id = data[i].ProductId }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = data[i].ProductId })
+                        @Html.ActionLink("Delete", "Delete", new { id = data[i].ProductId }) |
+                        @Html.ActionLink("OrderLines", "Index", new { ProductId = data[i].ProductId })
                     </td>
                 </tr>
             }
@@ -77,4 +83,10 @@
         </table>
         <button class="btn btn-primary">批次更新</button>
     }
+<hr />
+@if (ViewBag.SelectedProductId != null)
+{
+    @Html.Action("Index", "OrderLines", new { ProductId = ViewBag.SelectedProductID })
+}
+
 
