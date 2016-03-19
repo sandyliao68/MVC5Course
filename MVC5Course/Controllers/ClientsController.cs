@@ -88,7 +88,10 @@ namespace MVC5Course.Controllers
             {
                 db.Entry(client).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return View("Index", db.Client.Include(c => c.Occupation).Take(5));
+                //不建議這樣寫,因為偶合太深
+                //return this.Index();  但Index Action 要指定 return View(client.Take(5).ToList());
+                //return RedirectToAction("Index");
             }
             ViewBag.OccupationId = new SelectList(db.Occupation, "OccupationId", "OccupationName", client.OccupationId);
             return View(client);
