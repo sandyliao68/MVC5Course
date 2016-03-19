@@ -33,9 +33,9 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Price)
                 </th>
-                @*<th>
-            @Html.DisplayNameFor(model => model.Active)
-        </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.Active)
+                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Stock)
                 </th>
@@ -64,9 +64,9 @@
                         @Html.EditorFor(modelItem => data[i].Price)<br />
                         @Html.ValidationMessageFor(modelItem => data[i].Price)
                     </td>
-                    @*<td>
-        @Html.EditorFor(modelItem => data[i].Active)
-    </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => data[i].Active)
+                     </td>
                     <td>
                         @Html.EditorFor(modelItem => data[i].Stock)<br />
                         @Html.ValidationMessageFor(modelItem => data[i].Stock)
