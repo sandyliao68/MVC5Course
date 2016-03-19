@@ -2,13 +2,24 @@
 
 @{
     ViewBag.Title = "Index";
+    var CommonAjaxOptions = new AjaxOptions() { UpdateTargetId = "Details", LoadingElementId = "loading", OnSuccess = "ajaxSuccess" };
 }
+
+@section Scripts {
+    <script>
+        function ajaxSuccess() {
+            console.log('Succeed');
+        }
+    </script>
+}		 
 
 <h2>Index</h2>
 
 <p>
-    @Ajax.ActionLink("Create New", "Create", new AjaxOptions() { UpdateTargetId = "Details" }) 
+    @Ajax.ActionLink("Create New", "Create", CommonAjaxOptions) 
 </p>
+<div><img id="loading" src="~/Content/ajax-loader.gif" style="display:none"  /></div>
+
 <table class="table">
     <tr>
         <th>
@@ -54,12 +65,9 @@
         </td>
         
         <td>
-            @Ajax.ActionLink("Edit", "Edit", new { id = item.ClientId },
-                        new AjaxOptions() { UpdateTargetId = "Details" }) |
-            @Ajax.ActionLink("Details", "Details", new { id = item.ClientId },
-                        new AjaxOptions() { UpdateTargetId = "Details" }) |
-            @Ajax.ActionLink("Delete", "Delete", new { id = item.ClientId },
-                        new AjaxOptions() { UpdateTargetId="Details"})
+            @Ajax.ActionLink("Edit", "Edit", new { id = item.ClientId },CommonAjaxOptions) |
+            @Ajax.ActionLink("Details", "Details", new { id = item.ClientId },CommonAjaxOptions) |
+            @Ajax.ActionLink("Delete", "Delete", new { id = item.ClientId }, CommonAjaxOptions)
         </td>
     </tr>
 }

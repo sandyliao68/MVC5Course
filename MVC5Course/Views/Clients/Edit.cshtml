@@ -12,7 +12,7 @@
 <h2>Edit</h2>
 
 
-@using (Ajax.BeginForm(new AjaxOptions() { UpdateTargetId = "main" }))
+@using (Ajax.BeginForm(new AjaxOptions() { UpdateTargetId = "main", Confirm = "您確定要送出更新的資料嗎？" }))
 {
     @Html.AntiForgeryToken()
     
